@@ -80,7 +80,6 @@ class SpeedTest: NSObject {
         // Run PINGs and create new dictionary including results
         for server in sortedDistanceDictionary {
             if (self.stopping)  {
-                self.stopping = false
                 return nil
             }
 
@@ -133,7 +132,7 @@ class SpeedTest: NSObject {
         }
 
         minPing = minPing * 1000
-        minPing = round(minPing * 1000) / 1000000
+        minPing = round(minPing * 1000) / 1000
 
         var providerName: String = ""
         for server in servers {
@@ -143,8 +142,12 @@ class SpeedTest: NSObject {
             }
         }
 
+        if (self.stopping)  {
+            return nil
+        }
+
         DispatchQueue.main.async { // it needs to run on main thread
-            self.pingTime?.text = "Ping: " + (minPing * 1000).description + "ms"
+            self.pingTime?.text = "Ping: " + String(format: "%.3f", minPing) + "ms"
             self.serverName?.text = "Server: " + providerName
         }
 
@@ -183,7 +186,6 @@ class SpeedTest: NSObject {
         while (Date().timeIntervalSince1970 - startTest < TimeInterval(testDuration)) {
 
             if (self.stopping)  {
-                self.stopping = false
                 return
             }
 

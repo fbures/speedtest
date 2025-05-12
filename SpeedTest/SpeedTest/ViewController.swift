@@ -67,16 +67,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     /// Start/Stop button pressed
     /// - Parameter sender: sender
     @IBAction func press(_ sender: Any) {
-        self.serverName?.text = "Server: "
-        self.pingTime?.text = "Ping: "
-        self.downloadSpeed?.text = "Download Speed: "
-
         if (starting)   {
             self.speedTest.stopTest()
             self.start?.setTitle("Start", for: .normal)
             self.starting = false
         }
         else {
+            self.serverName?.text = "Server: "
+            self.pingTime?.text = "Ping: "
+            self.downloadSpeed?.text = "Download Speed: "
             self.starting = true
             self.start?.setTitle("Stop", for: .normal)
             if (self.locationServicesEnabled && self.clientLogitude == 0 && self.clientLatitude == 0)  {
